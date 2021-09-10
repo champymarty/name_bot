@@ -1,3 +1,4 @@
+from Parser import Parser
 from data_model.History import History
 import discord
 import os
@@ -22,7 +23,13 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    pass
+
+    if message.content.startswith('.name'):
+        parser = Parser()
+        args = message.content.split(".name")[1].strip().split(" ")
+        valid_args, unknown_args = parser.parse(args)
+        print(valid_args)
+        print(unknown_args)
 
 @client.event
 async def on_member_update(before, after):
