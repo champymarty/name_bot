@@ -17,3 +17,5 @@ class Server:
         self.users.append(User(user_id))
         self.users_index[user_id] = len(self.users) - 1
 
+    def get_history(self, user_id):
+        return self.users[self.users_index[user_id]].names

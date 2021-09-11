@@ -13,7 +13,9 @@ class Parser:
             type=str, nargs="+"
         )
         self.parser.add_argument("-m", "--max", default=5, type=int,
-                            help="iThe maximum number of name to display")
+                            help="The maximum number of name to display")
+        self.parser.add_argument("-n", "--name", action="store_true",
+                            help="If the search is made by name and not nickname")
 
 
     def parse(self):

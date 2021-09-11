@@ -28,6 +28,9 @@ class History:
         with open(History.data_file, 'wb') as config_dictionary_file:
             pickle.dump((self.servers_index, self.servers), config_dictionary_file)
 
+    def get_history(self, server_id, user_id):
+        return self.servers[self.servers_index[server_id]].get_history(user_id)
+
     def toJSON(self):
         servers = {}
         for server in self.servers:
