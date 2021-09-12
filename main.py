@@ -15,7 +15,7 @@ intents.members = True
 client = commands.Bot(command_prefix="!", intents=intents)
 
 history = History()
-failedCommandTumnail = "https://media.giphy.com/media/3og0IvGtnDyPHCRaYU/giphy.gif"
+failedCommandTumnail = "https://cdn.discordapp.com/emojis/831963313889476648.gif?v=1"
 
 @client.event
 async def on_ready():
