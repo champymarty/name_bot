@@ -10,10 +10,10 @@ class History:
     def __init__(self):  
         self._load_history()
 
-    def handle_new_name(self, server_id, user_id, new_name):
+    def handle_new_name(self, server_id, user_id, new_name, old_name):
         if server_id not in self.servers_index:
             self._create_server(server_id)
-        self.servers[self.servers_index[server_id]].add_new_username(user_id, new_name)
+        self.servers[self.servers_index[server_id]].add_new_username(user_id, new_name, old_name)
         self._save_history()
 
     def _load_history(self):
@@ -28,8 +28,10 @@ class History:
         with open(History.data_file, 'wb') as config_dictionary_file:
             pickle.dump((self.servers_index, self.servers), config_dictionary_file)
 
-    def get_history(self, server_id, user_id):
-        return self.servers[self.servers_index[server_id]].get_history(user_id)
+    def get_history(self, server_id, user_id, old_name):
+        if server_id not in self.servers_index:
+            self._create_server(server_id)
+        return self.servers[self.servers_index[server_id]].get_history(user_id, old_name)
 
     def toJSON(self):
         servers = {}

@@ -9,5 +9,5 @@ class User:
     def __eq__(self, other):
         return self.id == other.id and self.names == other.names
 
-    def add_name(self, new_name: str):
-        self.names.append(Name(new_name))
+    def add_name(self, new_name: str, take_time=True):
+        self.names.append(Name(new_name, take_time=take_time))

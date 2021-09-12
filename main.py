@@ -76,7 +76,7 @@ async def search_by_name(message, known_args):
 @client.event
 async def on_member_update(before, after):
     if before.display_name != after.display_name:
-        history.handle_new_name(after.guild.id, after.id, after.display_name)
+        history.handle_new_name(after.guild.id, after.id, after.display_name, before.display_name)
 
 async def sendMessage(message, messageToDisplay, error, title):
     embedVar = discord.Embed(title=title, description=messageToDisplay, color=0x00FF00)
@@ -86,7 +86,13 @@ async def sendMessage(message, messageToDisplay, error, title):
     await message.channel.send(embed=embedVar)
 
 async def display_names(message, user_id, max):
-    names = history.get_history(message.guild.id, user_id)
+    user = message.guild.get_member(user_id)
+    if user.nick is None:
+        current_name = user.name
+    else:
+        current_name = user.nick
+
+    names = history.get_history(message.guild.id, user_id, current_name)
     message_to_display = ""
     count = 0
     for i in range(len(names) - 1, -1, -1):
@@ -106,7 +112,6 @@ async def display_names(message, user_id, max):
             )
         message_to_display += "{}) **{}**   *{}* \n\n".format(str(count + 1), names[i].name, time)
         count += 1
-    user = client.get_user(user_id)
     await sendMessage(message, message_to_display, False, "{}#{}".format(user.name, user.discriminator))
 
 def get_all_nicknames():
